@@ -1,0 +1,16 @@
+/* workbook.css */
+
+.workbook-section {
+  text-align: center;
+  padding: 2rem;
+}
+
+.membership-btn {
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+}

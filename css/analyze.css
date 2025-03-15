@@ -1,0 +1,32 @@
+/* analyze.css */
+
+.analyze-section {
+  padding: 2rem;
+  text-align: center;
+}
+
+.text-inputs {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  margin: 0 auto 1rem auto;
+}
+
+.text-inputs textarea {
+  width: 100%;
+  min-height: 80px;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  resize: vertical;
+  font-size: 1rem;
+}
+
+.analyze-btn {
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+}

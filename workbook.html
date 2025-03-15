@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>독해연구소 - 지문 분석하기</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/workbook.css" />
+</head>
+<body>
+  <!-- 공통 네비게이션 바 -->
+  <header class="navbar">
+    <a href="index.html"><img src="images/logo.png" alt="독해연구소 로고" class="logo" /></a>
+    <a href="index.html">Home</a>
+    <a href="analyze.html">지문 분석하기</a>
+    <a href="workbook.html" class="active">워크북 만들기</a>
+    <a href="guide.html">사용 방법 가이드</a>
+    <button id="nav-login-btn" class="login-btn">Log in</button>
+  </header>
+
+  <main>
+    <!-- 메인 섹션 -->
+    <section class="hero-section">
+      <!-- C 이미지 (오른쪽 상단/중단 등 절대 배치) -->
+      <img src="images/C.png" alt="메인 C 이미지" class="hero-c" />
+      <canvas id="canvas3d"></canvas>
+
+      <!-- 왼쪽 상단 텍스트 -->
+      <div class="hero-text">
+        아직 독해연구소의 회원이 아니시군요,<br>
+        독해연구소의 회원이 되어보세요.
+      </div>
+
+      <!-- 버튼 -->
+      <button class="guide-btn" onclick="location.href='login.html'">
+        독해연구소 회원가입
+      </button>
+
+      <!-- 오른쪽 아래 설명 -->
+      <div class="explanation">
+        독해연구소는 내신 지문을 효과적으로 분석하고,<br />
+        글의 흐름, 주요 어휘 정리, 문제 변형 등을 지원하는 AI 기반 지문 분석 플랫폼입니다.<br />
+        학생과 교사를 위한 맞춤형 분석 서비스를 제공합니다.
+      </div>
+    </section>
+
+
+
+
+    <!-- <section class="analyze-section">
+      <h2>분석을 원하는 지문들을 입력해 주세요.</h2>
+      <div class="text-inputs">
+        <textarea placeholder="지문 1"></textarea>
+        <textarea placeholder="지문 2"></textarea>
+        <textarea placeholder="지문 3"></textarea>
+      </div>
+      <button class="analyze-btn" onclick="analyzeTexts()">분석하기</button>
+    </section> -->
+
+
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-left">독해연구소</div>
+    <div class="footer-center">독해연구소, 2025 © All Rights Reserved</div>
+    <div class="footer-right"></div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/analyze.js"></script>
+  <script src="js/three.min.js"></script>
+  <script src="js/GLTFLoader.js"></script>
+  <script src="js/C.js"></script>
+</body>
+</html>
