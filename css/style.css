@@ -225,13 +225,28 @@ body {
   text-align: right;
 }
 
-/* .hero-c 예전 코드 대신, canvas를 같은 위치/크기에 맞춰 배치 */
-#canvas3d {
+/* A */
+#canvas3d1 {
   position: absolute;
   left: 560px;
   top: 2rem;
   width: 250px;  /* 화면상 표시되는 크기 */
-  height: 300px; 
-  /* 만약 배경 투명(또는 흰색)이 보이도록 하고 싶다면 */
-  /* background: transparent;  - (렌더러 설정에서 처리할 수도 있음) */
+  height: 350px;
+}
+
+/* B */
+#canvas3d2 {
+  position: absolute;
+  left: 360px;
+  top: 16rem;
+  width: 250px;  /* 화면상 표시되는 크기 */
+  height: 350px; 
+}
+
+#canvas3d3 {
+  position: absolute;
+  left: 160px;
+  top: 20rem;
+  width: 250px;  /* 화면상 표시되는 크기 */
+  height: 350px; 
 }
