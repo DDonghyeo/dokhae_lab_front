@@ -420,7 +420,7 @@ function updatePreview() {
   const selectedSize = fontSizeSelect.value;
 
   switch (selectedFont) {
-    case 'NOTOSANSKR_MEDIUM':
+    case 'NOTOSANSKR_REGULAR':
       fontPreview.style.fontFamily = "'Noto Sans KR', sans-serif";
       break;
     case 'NOTOSERIFKR_MEDIUM':
