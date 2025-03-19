@@ -221,3 +221,11 @@
   width: 20px;
 }
 
+#font-select option[value="NOTOSANSKR_MEDIUM"] {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+#font-select option[value="NOTOSERIFKR_MEDIUM"],
+#font-select option[value="NOTOSERIFKR_REGULAR"] {
+  font-family: 'Noto Serif KR', serif;
+}

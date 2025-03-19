@@ -15,6 +15,7 @@
     <a href="workbook.html">워크북 만들기</a>
     <a href="guide.html">사용 방법 가이드</a>
     <button id="nav-login-btn" class="login-btn">Log in</button>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Noto+Serif+KR&display=swap" rel="stylesheet">
 </header>
 
   
@@ -214,6 +215,43 @@
               <button class="refresh-cancle hidden">취소</button>
               <button class="refresh">AI 재 생성</button>
             </div>
+          </div>
+          
+          <div class="pdf-options" style="margin-top: 20px;">
+            <label for="font-select">폰트:</label>
+            <select id="font-select">
+              <option value="NOTOSANSKR_REGULAR" style="font-family: 'Noto Sans KR', sans-serif;">NotoSansKR-Regular</option>
+              <option value="NOTOSERIFKR_REGULAR" style="font-family: 'Noto Serif KR', serif;">NotoSerifKR-Regular</option>
+            </select>
+          
+            <label for="font-size-select" style="margin-left: 10px;">글자 크기:</label>
+            <select id="font-size-select">
+              <option value="6">6px</option>
+              <option value="7">7px</option>
+              <option value="8">8px</option>
+              <option value="9">9px</option>
+              <option value="10">10px</option>
+              <option value="11">11px</option>
+              <option value="12" selected>12px</option>
+              <option value="13">13px</option>
+              <option value="14">14px</option>
+              <option value="15">15px</option>
+              <option value="16">16px</option>
+              <option value="17">17px</option>
+              <option value="18">18px</option>
+              <option value="19">19px</option>
+              <option value="20">20px</option>
+              <option value="21">21px</option>
+              <option value="22">22px</option>
+              <option value="23">23px</option>
+              <option value="24">24px</option>
+            </select>
+          
+            <!-- 미리보기 -->
+            <div id="font-preview" style="margin-top: 10px; border: 1px solid #ccc; padding: 10px;">
+              미리보기 텍스트입니다.
+            </div>
+            <div style="color: #989898; font-size: 0.9rem; margin-top: 5px;"> * 글자가 너무 크면 화면을 벗어날 수 있습니다.</div>
           </div>
           
           <button class="delete-paragraph">삭제</button>

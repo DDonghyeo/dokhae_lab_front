@@ -343,11 +343,14 @@ editGroups.forEach(group => {
 const pdfBtn = document.querySelector('.generate-pdf');
 pdfBtn.addEventListener('click', () => {
   const id = modalContainer.getAttribute('data-id');
+  const selectedFont = fontSelect.value;
+  const selectedSize = fontSizeSelect.value;
+
   pdfBtn.disabled = true;
   pdfBtn.innerHTML = '생성 중... <img class="status_icon" src="images/loading.gif">';
 
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', `${API_BASE_URL}/api/paragraph/generatePdf?id=${id}&font=NOTOSANSKR_REGULAR&size=12`, true);
+  xhr.open('GET', `${API_BASE_URL}/api/paragraph/generatePdf?id=${id}&font=${selectedFont}&size=${selectedSize}`, true);
   xhr.setRequestHeader('Authorization', `Bearer ${getToken()}`);
   xhr.responseType = 'blob';
   xhr.withCredentials = true;
@@ -406,3 +409,32 @@ deleteBtn.addEventListener('click', () => {
   });
 });
 
+
+const fontSelect = document.getElementById('font-select');
+const fontSizeSelect = document.getElementById('font-size-select');
+const fontPreview = document.getElementById('font-preview');
+
+// 폰트 & 크기 변경 이벤트
+function updatePreview() {
+  const selectedFont = fontSelect.value;
+  const selectedSize = fontSizeSelect.value;
+
+  switch (selectedFont) {
+    case 'NOTOSANSKR_MEDIUM':
+      fontPreview.style.fontFamily = "'Noto Sans KR', sans-serif";
+      break;
+    case 'NOTOSERIFKR_MEDIUM':
+    case 'NOTOSERIFKR_REGULAR':
+      fontPreview.style.fontFamily = "'Noto Serif KR', serif";
+      break;
+  }
+
+  fontPreview.style.fontSize = `${selectedSize}px`;
+}
+
+// 이벤트 연결
+fontSelect.addEventListener('change', updatePreview);
+fontSizeSelect.addEventListener('change', updatePreview);
+
+// 초기 설정
+updatePreview();
