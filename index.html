@@ -11,7 +11,7 @@
 <body>
   <!-- 헤더: nav-bar -->
   <header class="navbar">
-      <a href="index.html"><img src="images/logo.png" alt="독해연구소 로고" class="logo" /></a>
+      <a href="index.html"><img src="images/logo.png" class="logo" /></a>
       <a href="index.html" class="active">Home</a>
       <a href="analyze.html">지문 분석하기</a>
       <a href="workbook.html">워크북 만들기</a>
@@ -48,6 +48,24 @@
     </section>
   </main>
 
+
+
+    <!-- 로그인 배경 오버레이 -->
+  <div id="login-overlay" class="login-overlay hidden"></div>
+  <div id="login-panel" class="login-panel hidden">
+    <div class="login-content">
+      <img src="images/logo.png" class="login_logo"/>
+      <div class="login-hero">
+        <h2>독해연구소 로그인</h2>
+        <h2>아이디와 비밀번호를 입력해주세요.</h2>
+      </div>
+      <input type="text" placeholder="ID" />
+      <input type="password" placeholder="PW" />
+      <div id="auto-login"> <span>로그인 기억하기</span> <input type="checkbox"></div>
+      <button id="login-panel button">로그인</button>
+    </div>
+  </div>
+
   <!-- footer - 고정(fixed) -->
   <footer class="footer">
     <div class="footer-left">독해연구소</div>
@@ -56,6 +74,7 @@
   </footer>
 
   <script src="js/auth.js"></script>
+  <script src="js/login.js"></script>
   <script src="js/index.js"></script>
   <script src="js/three.min.js"></script>
   <script src="js/GLTFLoader.js"></script>

@@ -17,48 +17,248 @@
     <button id="nav-login-btn" class="login-btn">Log in</button>
 </header>
 
+  
+
   <main>
     <!-- 메인 섹션 -->
-    <section class="hero-section">
-      <!-- C 이미지 (오른쪽 상단/중단 등 절대 배치) -->
-      <img src="images/C.png" alt="메인 C 이미지" class="hero-c" />
-      <canvas id="canvas3d"></canvas>
+    <section class="analyze-section">
 
-      <!-- 왼쪽 상단 텍스트 -->
-      <div class="hero-text">
-        아직 독해연구소의 회원이 아니시군요,<br>
-        독해연구소의 회원이 되어보세요.
+      <div class="paragraph_container">
+
+        <!-- 샘플 -->
+        <!-- <div class="paragraph">
+          <h1 class="paragraph_title">title</h1>
+          <span class="paragraph_content">Do you ever find yourself suddenly feeling angry? One
+            moment you’re fine, and the next moment you’re slamming
+            doors or rolling your eyes at your parents...</span>
+          <div class="paragraph_status_bar">
+            <span>2024.03.18</span>
+            <span>분석 완료 <img class="status_icon" src="images/circle-check-solid.png" alt=""></span>
+          </div>
+        </div> -->
+        <!-- 샘플 -->
+
+        <!-- 샘플 -->
+        <!-- <div class="paragraph">
+          <h1 class="paragraph_title">title</h1>
+          <span class="paragraph_content">Do you ever find yourself suddenly feeling angry? One
+            moment you’re fine, and the next moment you’re slamming
+            doors or rolling your eyes at your parents...</span>
+          <div class="paragraph_status_bar">
+            <span>2024.03.18</span>
+            <span>분석 중... <img class="status_icon" src="images/loading.gif" alt=""></span>
+          </div>
+        </div> -->
+        <!-- 샘플 -->
+
+        <!-- 샘플 -->
+        <!-- <div class="paragraph">
+          <h1 class="paragraph_title">title</h1>
+          <span class="paragraph_content">Do you ever find yourself suddenly feeling angry? One
+            moment you’re fine, and the next moment you’re slamming
+            doors or rolling your eyes at your parents...</span>
+          <div class="paragraph_status_bar">
+            <span>2024.03.18</span>
+            <span>확인 중... <img class="status_icon" src="images/loading.gif" alt=""></span>
+          </div>
+        </div> -->
+        <!-- 샘플 -->
+
+        <!-- 추가 버튼 -->
+        <div id="add_paragraph" class="paragraph" style="text-align: center;">
+          <h1>+</h1>
+        </div>
+        <!-- 추가 버튼 -->
+
       </div>
 
-      <!-- 버튼 -->
-      <button class="guide-btn" onclick="location.href='login.html'">
-        독해연구소 회원가입
-      </button>
 
-      <!-- 오른쪽 아래 설명 -->
-      <div class="explanation">
-        독해연구소는 내신 지문을 효과적으로 분석하고,<br />
-        글의 흐름, 주요 어휘 정리, 문제 변형 등을 지원하는 AI 기반 지문 분석 플랫폼입니다.<br />
-        학생과 교사를 위한 맞춤형 분석 서비스를 제공합니다.
-      </div>
     </section>
 
 
 
-
-    <!-- <section class="analyze-section">
-      <h2>분석을 원하는 지문들을 입력해 주세요.</h2>
-      <div class="text-inputs">
-        <textarea placeholder="지문 1"></textarea>
-        <textarea placeholder="지문 2"></textarea>
-        <textarea placeholder="지문 3"></textarea>
+    <!-- 분석 추가 -->
+    <div class="modal_container hidden">
+      <div class="modal_content">
+        <h2>분석을 원하는 지문을 입력해 주세요.</h2><img id="close_modal" src="images/xmark-solid.svg"></img>
+        <div class="text-inputs">
+          <textarea placeholder="지문 내용 입력"></textarea>
+        </div>
+        <button class="analyze-btn">추가하기</button>
       </div>
-      <button class="analyze-btn" onclick="analyzeTexts()">분석하기</button>
-    </section> -->
+    </div>
+
+    <!-- 지문 상세 -->
+    <div class="paragraph_modal_container hidden" data-id="null">
+      
+      <div class="paragraph_modal_content">
+        
+        <div class="paragraph_detail_status_bar">
+          <img id="close_paragraph_modal" src="images/xmark-solid.svg"></img>
+          <span>생성 : 2025.03.18</span>
+          <span>분석 완료 <img class="status_icon" src="images/circle-check-solid.png" alt=""> </span>
+        </div>
+
+
+        <div class="paragraph_modal_inner">
+          <div class="paragraph_block title">
+            <h1>title</h1>
+
+            <span>Assessing Personal Anger Triggers and Management</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+            
+          </div>
+  
+          <div class="paragraph_block sentences">
+            <h1>paragraph</h1>
+            <span>
+              1.How often do I feel angry? <br>
+              얼마나 자주 화가 나는가? <br>
+              2.What situations make me feel the most intense anger? <br>
+              어떤 상황이 나를 가장 크게 화나게 하는가? <br>
+              3.Is my anger directed at anyone or anything in particular? <br>
+              나의 화는 특정 인물이나 사물에 향하고 있는가? <br>
+              4.Do I focus on the causes of my anger instead of solutions? <br>
+              해결책보다 화가 난 원인에 집중하는가? <br>
+              5.Can I control my emotions when I get angry? <br>
+              화를 낼 때 감정을 조절할 수 있는가? <br>
+              6.How do I react and behave when I get angry <br>
+              화가 날 때 어떻게 반응하고 행동하는가? <br>
+            </span>
+              
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+  
+          <div class="paragraph_block summary">
+            <h1>summary</h1>
+            <span>summary</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+  
+          <div class="paragraph_block introduction">
+            <h1>introduction</h1>
+            <span>Several questions are presented for individuals to assess their frequency and triggers of anger.</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+  
+          <div class="paragraph_block development">
+            <h1>development</h1>
+            <span>The questions encourage introspection on specific situations, targets of anger, focus on causes versus solutions, emotional control, and behavioral reactions in anger-inducing scenarios.</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+          
+          <div class="paragraph_block conclusion">
+            <h1>conclusion</h1>
+            <span>The questions aim to facilitate self-awareness and improve anger management.</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+          
+          <div class="paragraph_block grammarpoint">
+            <h1>grammar point</h1>
+            <span>grammar point</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+  
+          <div class="paragraph_block readingpoint">
+            <h1>reading point</h1>
+            <span>자기 성찰을 위한 질문 제시, 반복적 질문 형식, 구체적인 상황 제시, 감정 조절에 대한 강조, 해결책 모색 유도</span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+  
+          <div class="paragraph_block wordpoints">
+            <h1>word point</h1>
+            <span>
+              angry: irate, calm
+              situations: circumstances, none
+              intense: severe, mild
+              directed: aimed, diverted
+              control: manage, lose
+            </span>
+            <div class="edit_group">
+              <button class="edit">수정</button>
+              <input class="prompt hidden" type="text" name="prompt" placeholder="프롬프트 입력">
+              <button class="refresh-confirm hidden">완료</button>
+              <button class="refresh-cancle hidden">취소</button>
+              <button class="refresh">AI 재 생성</button>
+            </div>
+          </div>
+          
+          <button class="delete-paragraph">삭제</button>
+          <button class="generate-pdf">pdf 생성</button>
+          </div>
+        </div>
+    </div>
+    
+
 
 
 
   </main>
+
+
+    <!-- 로그인 배경 오버레이 -->
+    <div id="login-overlay" class="login-overlay hidden"></div>
+    <div id="login-panel" class="login-panel hidden">
+      <div class="login-content">
+        <img src="images/logo.png" class="login_logo"/>
+        <div class="login-hero">
+          <h2>독해연구소 로그인</h2>
+          <h2>아이디와 비밀번호를 입력해주세요.</h2>
+        </div>
+        <input type="text" placeholder="ID" />
+        <input type="password" placeholder="PW" />
+        <div id="auto-login"> <span>로그인 기억하기</span> <input type="checkbox"></div>
+        <button id="login-panel button">로그인</button>
+      </div>
+    </div>
 
   <footer class="footer">
     <div class="footer-left">독해연구소</div>
@@ -68,8 +268,5 @@
 
   <script src="js/auth.js"></script>
   <script src="js/analyze.js"></script>
-  <script src="js/three.min.js"></script>
-  <script src="js/GLTFLoader.js"></script>
-  <script src="js/C.js"></script>
 </body>
 </html>

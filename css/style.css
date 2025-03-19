@@ -250,3 +250,111 @@ body {
   width: 250px;  /* 화면상 표시되는 크기 */
   height: 350px; 
 }
+
+
+/* 로그인 */
+/* 배경 오버레이 */
+.login-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* 반투명 회색 */
+  z-index: 100;
+  transition: opacity 0.3s;
+}
+
+/* 로그인 패널 */
+.login-panel {
+  position: fixed;
+  top: 0;
+  left: -500px;
+  width: 500px;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+  z-index: 101;
+  transition: left 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-content input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  height: 25px;
+  width: 80%;
+}
+
+.login-content button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #1679B9;
+  color: white;
+  border: 1px solid;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 87%;
+  height: 40px;
+}
+
+.hidden {
+  display: none;
+}
+
+.show-overlay {
+  display: block;
+  opacity: 1;
+}
+
+.slide-in {
+  left: 0;
+}
+
+.login-hero{
+  color: #0057b7;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 35px;
+  line-height: 56px;
+  /* or 160% */
+
+  background: linear-gradient(90.79deg, #1679B9 3.42%, #1679B9 82.66%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 45px;
+
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+#auto-login{
+  color: #757272;
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
+}
+
+#auto-login span{
+  width: auto;
+}
+
+#auto-login input{
+  width: auto;
+  margin-left: 15px;
+  cursor: pointer;
+}
