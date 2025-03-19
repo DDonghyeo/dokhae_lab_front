@@ -1,23 +1,17 @@
 let pollingInterval = null;
+let paragraphMap = new Map(); // key: id, value: status
 
 function loadParagraphs() {
   console.log("load paragraphs....")
-  const container = document.querySelector('.paragraph_container');
-  container.innerHTML = ''; // 기존 지문 제거 (새로고침용)
 
   apiRequest('/api/paragraph/brief')
     .then(data => {
       let needPolling = false;
 
       data.forEach(item => {
-        const paragraphDiv = document.createElement('div');
-        paragraphDiv.className = 'paragraph';
-        paragraphDiv.setAttribute('data-id', item.id);
-        paragraphDiv.setAttribute('data-status', item.status);
-      
-        const title = item.title ? item.title : "분석 중...";
+        const existing = document.querySelector(`.paragraph[data-id="${item.id}"]`);
         const createdAt = new Date(item.createdAt).toLocaleDateString();
-      
+
         let statusText = '';
         let statusIcon = '';
         switch (item.status) {
@@ -40,47 +34,58 @@ function loadParagraphs() {
             statusIcon = '';
             break;
         }
-      
-        paragraphDiv.innerHTML = `
-          <h1 class="paragraph_title">${title}</h1>
-          <span class="paragraph_content">${item.content.length > 150 ? item.content.substring(0, 150) + '...' : item.content}</span>
-          <div class="paragraph_status_bar">
-            <span>${createdAt}</span>
-            <span>${statusText} ${statusIcon}</span>
-          </div>
-        `;
-      
-        container.appendChild(paragraphDiv);
-      });
 
-      // 6. Paragraph 블럭 클릭 이벤트 연결 (기존 코드에서 블럭에 id 할당 후 여기에 연결)
-      document.querySelectorAll('.paragraph').forEach(p => {
-        const id = p.getAttribute('data-id');
-        const status = p.getAttribute('data-status');
+        // 이미 존재하면 status만 업데이트
+        if (existing) {
+          const currentStatus = paragraphMap.get(item.id);
+          if (currentStatus !== item.status) {
+            // Status 변경된 경우 업데이트
+            const statusBar = existing.querySelector('.paragraph_status_bar span:last-child');
+            statusBar.innerHTML = `${statusText} ${statusIcon}`;
+            existing.querySelector('.paragraph_title').textContent = item.title ? item.title : '분석 중...';
+            existing.setAttribute('data-status', item.status);
+            paragraphMap.set(item.id, item.status);
+          }
+        } else {
+          // 새 paragraph 추가
+          const container = document.querySelector('.paragraph_container');
+          const paragraphDiv = document.createElement('div');
+          paragraphDiv.className = 'paragraph';
+          paragraphDiv.setAttribute('data-id', item.id);
+          paragraphDiv.setAttribute('data-status', item.status);
         
-        if (id) {
-          p.addEventListener('click', () => {
-            if (status === 'CREATED' || status === 'ANALYZING') {
+          const title = item.title ? item.title : "분석 중...";
+
+          paragraphDiv.innerHTML = `
+            <h1 class="paragraph_title">${title}</h1>
+            <span class="paragraph_content">${item.content.length > 150 ? item.content.substring(0, 150) + '...' : item.content}</span>
+            <div class="paragraph_status_bar">
+              <span>${createdAt}</span>
+              <span>${statusText} ${statusIcon}</span>
+            </div>
+          `;
+          // add button 위에 추가
+          const addBtn = document.getElementById('add_paragraph');
+          addBtn.addEventListener("click", openModal)
+          container.insertBefore(paragraphDiv, addBtn);
+
+          // 클릭 이벤트
+          paragraphDiv.addEventListener('click', () => {
+            const currentStatus = paragraphDiv.getAttribute('data-status'); // 매번 최신 상태 읽기!
+            if (currentStatus === 'CREATED' || currentStatus === 'ANALYZING') {
               alert('분석 중입니다. 잠시만 기다려 주세요.');
               return;
             }
-            openDetailModal(id);
+            openDetailModal(item.id);
           });
+
+          paragraphMap.set(item.id, item.status);
         }
       });
 
-      // 추가 버튼 다시 추가
-      const addDiv = document.createElement('div');
-      addDiv.id = 'add_paragraph';
-      addDiv.className = 'paragraph';
-      addDiv.style.textAlign = 'center';
-      addDiv.innerHTML = '<h1>+</h1>';
-      addDiv.addEventListener('click', openModal);
-      container.appendChild(addDiv);
-
-      // 폴링 처리
+      // 폴링
       if (needPolling && !pollingInterval) {
-        pollingInterval = setInterval(loadParagraphs, 5000); // 5초마다
+        pollingInterval = setInterval(loadParagraphs, 5000);
       }
       if (!needPolling && pollingInterval) {
         clearInterval(pollingInterval);
@@ -123,21 +128,21 @@ document.querySelector('.analyze-btn').addEventListener('click', () => {
     return;
   }
   closeModal();
-  const container = document.querySelector('.paragraph_container');
-  const paragraphDiv = document.createElement('div');
-  paragraphDiv.className = 'paragraph';
-  paragraphDiv.setAttribute('data-id', null);
-  paragraphDiv.innerHTML = `
-    <h1 class="paragraph_title">분석 중...</h1>
-    <span class="paragraph_content">${text > 150 ? textsubstring(0, 150) + '...' : text}</span>
-    <div class="paragraph_status_bar">
-      <span>생성 중...</span>
-      <span>생성 중... <img class="status_icon" src="images/loading.gif"></span>
-    </div>
-  `;
+  // const container = document.querySelector('.paragraph_container');
+  // const paragraphDiv = document.createElement('div');
+  // paragraphDiv.className = 'paragraph';
+  // paragraphDiv.setAttribute('data-id', null);
+  // paragraphDiv.innerHTML = `
+  //   <h1 class="paragraph_title">분석 중...</h1>
+  //   <span class="paragraph_content">${text > 150 ? textsubstring(0, 150) + '...' : text}</span>
+  //   <div class="paragraph_status_bar">
+  //     <span>생성 중...</span>
+  //     <span>생성 중... <img class="status_icon" src="images/loading.gif"></span>
+  //   </div>
+  // `;
 
-  const addButton = document.getElementById('add_paragraph');
-  container.insertBefore(paragraphDiv, addButton);
+  // const addButton = document.getElementById('add_paragraph');
+  // container.insertBefore(paragraphDiv, addButton);
   
   apiRequest('/api/paragraph/analyze', {
     method: 'POST',
@@ -197,6 +202,10 @@ function loadDetail(id) {
       document.querySelector('.paragraph_block.grammarpoint span').textContent = data.grammarPoint || '';
       document.querySelector('.paragraph_block.readingpoint span').textContent = data.readingPoint || '';
       document.querySelector('.paragraph_block.wordpoints span').innerHTML = data.wordPoints.join('<br>');
+
+      const createdDate = new Date(data.createdAt).toLocaleDateString();
+      const statusBarSpans = document.querySelectorAll('.paragraph_detail_status_bar span');
+      statusBarSpans[0].textContent = `생성 : ${createdDate}`;
     })
     .catch(err => alert('상세 조회 실패: ' + err));
 }
@@ -337,37 +346,41 @@ pdfBtn.addEventListener('click', () => {
   pdfBtn.disabled = true;
   pdfBtn.innerHTML = '생성 중... <img class="status_icon" src="images/loading.gif">';
 
-  fetch(`${API_BASE_URL}/api/paragraph/generatePdf?id=${id}`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${getToken()}`
-    },
-    credentials: 'include',
-    // mode: 'cors',
-  })
-  .then(response => {
-    if (!response.ok) throw new Error("PDF 요청 실패");
-    return response.blob();
-  })
-  .then(blob => {
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `output_${id}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `${API_BASE_URL}/api/paragraph/generatePdf?id=${id}&font=NOTOSANSKR_REGULAR&size=12`, true);
+  xhr.setRequestHeader('Authorization', `Bearer ${getToken()}`);
+  xhr.responseType = 'blob';
+  xhr.withCredentials = true;
+
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      const url = window.URL.createObjectURL(xhr.response);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `output_${id}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      pdfBtn.disabled = false;
+      pdfBtn.innerText = 'pdf 생성';
+    } else {
+      console.error('PDF 다운로드 실패:', xhr.statusText);
+      alert('PDF 다운로드 실패. 다시 시도해 주세요.');
+      pdfBtn.disabled = false;
+      pdfBtn.innerText = 'pdf 생성';
+    }
+  };
+
+  xhr.onerror = function() {
+    console.error('PDF 요청 에러 발생');
+    alert('PDF 요청 에러');
     pdfBtn.disabled = false;
     pdfBtn.innerText = 'pdf 생성';
-  })
-  .catch(err => {
-    console.error('PDF 생성 오류', err);
-    alert('PDF 생성 실패. 다시 시도해 주세요.');
-    pdfBtn.disabled = false;
-    pdfBtn.innerText = 'pdf 생성';
-  });
+  };
+
+  xhr.send();
 });
 
 
