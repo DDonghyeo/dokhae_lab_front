@@ -291,6 +291,7 @@ editGroups.forEach(group => {
 });
 
 // 4. AI 재생성 기능
+// 4. AI 재생성 기능
 editGroups.forEach(group => {
   const refreshBtn = group.querySelector('.refresh');
   const confirmBtn = group.querySelector('.refresh-confirm');
@@ -314,6 +315,8 @@ editGroups.forEach(group => {
   confirmBtn.addEventListener('click', () => {
     const id = modalContainer.getAttribute('data-id');
     const section = group.parentElement.classList[1];
+    const prompt = promptInput.value.trim(); // ✅ 입력값 읽기
+
     refreshBtn.classList.remove('hidden');
     confirmBtn.classList.add('hidden');
     cancelBtn.classList.add('hidden');
@@ -324,7 +327,7 @@ editGroups.forEach(group => {
 
     apiRequest('/api/paragraph/refresh', {
       method: 'POST',
-      body: JSON.stringify({ id, section })
+      body: JSON.stringify({ id, section, prompt }) // ✅ prompt 포함
     })
     .then(() => {
       loadDetail(id);
@@ -335,7 +338,7 @@ editGroups.forEach(group => {
       cancelBtn.classList.add('hidden');
       promptInput.classList.add('hidden');
     })
-    .catch((err) => alert('재생성 실패: '+err));
+    .catch((err) => alert('재생성 실패: ' + err));
   });
 });
 
@@ -402,7 +405,7 @@ deleteBtn.addEventListener('click', () => {
   .then(() => {
     alert('삭제가 완료되었습니다.');
     closeDetailModal(); // 모달 닫기
-    loadParagraphs();   // 리스트 리로드
+    window.location.reload();
   })
   .catch(() => {
     alert('삭제 실패');
